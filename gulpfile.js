@@ -1,6 +1,6 @@
 const gulp = require('gulp')
 const clean = require('gulp-clean')
-
+// const fs = require('fs')
 const config = require('./tools/config')
 const BuildTask = require('./tools/build')
 const id = require('./package.json').name || 'miniprogram-custom-component'
@@ -8,6 +8,12 @@ const id = require('./package.json').name || 'miniprogram-custom-component'
 // 构建任务实例
 // eslint-disable-next-line no-new
 new BuildTask(id, config.entry)
+
+
+// const pkg = fs.readFileSync('./package.json', 'utf-8')
+// const pkgData = JSON.parse(pkg)
+// console.log('id ', id, pkgData.name)
+
 
 // 清空生成目录和文件
 gulp.task('clean', gulp.series(() => gulp.src(config.distPath, {read: false, allowEmpty: true}).pipe(clean()), done => {

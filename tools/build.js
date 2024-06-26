@@ -110,12 +110,14 @@ function install() {
   })
 }
 
+// 构建时传入的对象
+
 class BuildTask {
   constructor(id, entry) {
     if (!entry) return
 
-    this.id = id
-    this.entries = Array.isArray(config.entry) ? config.entry : [config.entry]
+    this.id = id // id: 一般情况下项目名
+    this.entries = Array.isArray(config.entry) ? config.entry : [config.entry] // 编译入口转化为数组
     this.copyList = Array.isArray(config.copy) ? config.copy : []
     this.componentListMap = {}
     this.cachedComponentListMap = {}
