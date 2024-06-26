@@ -45,20 +45,20 @@ function js(jsFileMap, scope) {
   const webpackCallback = (err, stats) => {
     if (!err) {
       // eslint-disable-next-line no-console
-      console.log(stats.toString({
-        assets: true,
-        cached: false,
-        colors: true,
-        children: false,
-        errors: true,
-        warnings: true,
-        version: true,
-        modules: false,
-        publicPath: true,
-      }))
+      // console.log(stats.toString({
+      //   assets: true,
+      //   cached: false,
+      //   colors: true,
+      //   children: false,
+      //   errors: true,
+      //   warnings: true,
+      //   version: true,
+      //   modules: false,
+      //   publicPath: true,
+      // }))
     } else {
       // eslint-disable-next-line no-console
-      console.log(err)
+      // console.log(err)
     }
   }
 
@@ -164,16 +164,19 @@ class BuildTask {
     gulp.task(`${id}-component-check`, async () => {
       const entries = this.entries
       const mergeComponentListMap = {}
+
       for (let i = 0, len = entries.length; i < len; i++) {
         let entry = entries[i]
         entry = path.join(srcPath, `${entry}.json`)
         const newComponentListMap = await checkComponents(entry)
-
+        console.log('entry == ', newComponentListMap)
         _.merge(mergeComponentListMap, newComponentListMap)
       }
 
+
       this.cachedComponentListMap = this.componentListMap
       this.componentListMap = mergeComponentListMap
+      // console.log('mergeComponentListMap == ', mergeComponentListMap)
     })
 
     /**
@@ -207,7 +210,7 @@ class BuildTask {
      */
     gulp.task(`${id}-component-wxss`, done => {
       const wxssFileList = this.componentListMap.wxssFileList
-
+      console.log('-component-wxss', wxssFileList)
       if (wxssFileList &&
         wxssFileList.length &&
         !_.compareArray(this.cachedComponentListMap.wxssFileList, wxssFileList)) {
@@ -250,7 +253,7 @@ class BuildTask {
           }
         } catch (err) {
           // eslint-disable-next-line no-console
-          console.error(err)
+          // console.error(err)
           return null
         }
       }).filter(copyFilePath => !!copyFilePath)

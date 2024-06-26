@@ -1,2 +1,4 @@
-<view class="index other">{{prop}}-{{flag}}</view>
-<other></other>
+<view id="mini-html">
+    测试
+</view>
+<!-- <other></other> -->

@@ -145,12 +145,13 @@ function format(time, reg) {
 /**
  * 日志插件
  */
+
 function logger(action = 'copy') {
   return through.obj(function (file, enc, cb) {
     const type = path.extname(file.path).slice(1).toLowerCase()
 
     // eslint-disable-next-line no-console
-    console.log(`[${format(new Date(), 'yyyy-MM-dd HH:mm:ss').grey}] [${action.green} ${type.green}] ${'=>'.cyan} ${file.path}`)
+    // console.log(`[${format(new Date(), 'yyyy-MM-dd HH:mm:ss').grey}] [${action.green} ${type.green}] ${'=>'.cyan} ${file.path}`)
 
     this.push(file)
     cb()

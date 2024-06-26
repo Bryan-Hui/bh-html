@@ -82,6 +82,7 @@ module.exports = async function (entry) {
   const isExists = await _.checkFileExists(entry)
   if (!isExists) {
     const {dirPath, fileName, fileBase} = getJsonPathInfo(entry)
+    // console.log('dirPath ==', dirPath, fileBase)
 
     const wholeFileBase = path.join(dirPath, fileName)
     let jsExt = '.js'
