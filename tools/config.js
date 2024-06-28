@@ -1,96 +1,82 @@
-const path = require('path')
-
-const webpack = require('webpack')
-const nodeExternals = require('webpack-node-externals')
-
-const isDev = process.argv.indexOf('--develop') >= 0
-const isWatch = process.argv.indexOf('--watch') >= 0
-const demoSrc = path.resolve(__dirname, './demo')
-const demoDist = path.resolve(__dirname, '../miniprogram_dev')
-const src = path.resolve(__dirname, '../src')
-const dev = path.join(demoDist, 'components')
-const dist = path.resolve(__dirname, '../miniprogram_dist')
-
+/**
+ * @fileoverview 配置文件
+ */
 module.exports = {
-  entry: ['index', 'lib'],
+  /**
+   * @description 需要的插件列表
+   */
+  plugins: [
+    // 按需打开注释即可
+    // 'audio',     // 音乐播放器
+    // 'editable',  // 内容编辑
+    // 'emoji',     // 小表情
+    // 'highlight', // 代码高亮
+    // 'markdown',  // 解析 md
+    // 'latex',     // 解析 latex
+    // 'search',    // 关键词搜索
+    // 'style',     // 解析 style 标签
+    // 'txv-video', // 使用腾讯视频
+    // 'img-cache'  // 图片缓存
+    // 'card',      // 卡片展示
+  ],
 
-  isDev,
-  isWatch,
-  srcPath: src, // 源目录
-  distPath: isDev ? dev : dist, // 目标目录
+  /**
+   * @description 要引入到组件中的外部样式（css）
+   * 仅支持标签名和 class 选择器
+   */
+  externStyle: '',
 
-  demoSrc, // demo 源目录
-  demoDist, // demo 目标目录
+  /**
+   * @description 要引入到模板中的自定义标签（ad 等）
+   * 每个标签为一个 object，包含 name（标签名，必要）、attrs（属性列表，非必要）、platforms（需要添加的平台，非必要）
+   */
+  customElements: [
+    /*
+    // 需要使用广告标签则打开此注释
+    {
+      name: 'ad',
+      attrs: ['unit-id']
+    }
+    */
+  ],
 
-  wxss: {
-    less: false, // 使用 less 来编写 wxss
-    sourcemap: false, // 生成 less sourcemap
+  /**
+   * @description babel 配置（es6 转 es5）
+   * @tutorial https://babeljs.io/docs/usage/options/
+   */
+  babel: {
+    presets: ['@babel/env']
   },
 
-  js: {
-    webpack: true, // 使用 webpack 来构建 js
-  },
-
-  webpack: {
-    mode: 'production',
+  /**
+   * @description js 压缩配置
+   * @tutorial https://www.npmjs.com/package/uglify-js#minify-options
+   */
+  uglify: {
+    mangle: {
+      toplevel: true
+    },
     output: {
-      filename: '[name].js',
-      libraryTarget: 'commonjs2',
-    },
-    target: 'node',
-    externals: [nodeExternals()], // 忽略 node_modules
-    module: {
-      rules: [{
-        test: /\.js$/i,
-        use: [{
-          loader: 'thread-loader',
-        }, {
-          loader: 'babel-loader',
-          options: {
-            cacheDirectory: true,
-          },
-        }, {
-          loader: 'eslint-loader',
-        }],
-        exclude: /node_modules/
-      }, {
-        test: /\.ts$/,
-        exclude: /node_modules/,
-        use: [{
-          loader: 'thread-loader',
-        }, {
-          loader: 'babel-loader',
-          options: {
-            cacheDirectory: true,
-          },
-        }, {
-          loader: 'ts-loader',
-          options: {
-            appendTsSuffixTo: [/\.vue$/],
-            happyPackMode: true,
-          },
-        }, {
-          loader: 'eslint-loader',
-        }],
-      }],
-    },
-    resolve: {
-      modules: [src, 'node_modules'],
-      extensions: ['.js', '.json'],
-    },
-    plugins: [
-      new webpack.DefinePlugin({}),
-      new webpack.optimize.LimitChunkCountPlugin({maxChunks: 1}),
-    ],
-    optimization: {
-      minimize: false,
-    },
-    devtool: 'source-map', // 生成 js sourcemap
-    performance: {
-      hints: 'warning',
-      assetFilter: assetFilename => assetFilename.endsWith('.js')
+      comments: /^!/
     }
   },
 
-  copy: ['./assets', './utils.js'], // 将会复制到目标目录
+  /**
+   * @description html 压缩配置
+   * @tutorial https://github.com/kangax/html-minifier#options-quick-reference
+   */
+  htmlmin: {
+    caseSensitive: true,
+    collapseWhitespace: true,
+    removeComments: true,
+    keepClosingSlash: true
+  },
+
+  /**
+   * @description css 压缩配置
+   * @tutorial https://github.com/jakubpawlowicz/clean-css#constructor-options
+   */
+  cleanCss: {
+
+  }
 }

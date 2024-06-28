@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "gulp dev --develop",
     "watch": "gulp watch --develop --watch",
+    "watch:weixin": "gulp watch --mp-weixin --dev",
+    "dev:weixin": "gulp dev --mp-weixin --dev",
+    "build:weixin": "gulp build --mp-weixin",
     "build": "gulp",
     "dist": "npm run build",
     "clean-dev": "gulp clean --develop",
@@ -35,6 +38,7 @@
   "author": "bryan hui",
   "license": "MIT",
   "devDependencies": {
+    "@babel/preset-env": "^7.24.7",
     "@typescript-eslint/eslint-plugin": "^2.28.0",
     "@typescript-eslint/parser": "^2.28.0",
     "babel-core": "^6.26.3",
@@ -49,12 +53,18 @@
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-promise": "^3.8.0",
     "gulp": "^4.0.0",
+    "gulp-babel": "^8.0.0",
     "gulp-clean": "^0.4.0",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-htmlmin": "^5.0.1",
     "gulp-if": "^2.0.2",
     "gulp-install": "^1.1.0",
     "gulp-less": "^4.0.1",
+    "gulp-plumber": "^1.2.1",
     "gulp-rename": "^1.4.0",
+    "gulp-size": "^5.0.0",
     "gulp-sourcemaps": "^2.6.5",
+    "gulp-uglify": "^3.0.2",
     "jest": "^23.5.0",
     "miniprogram-api-typings": "^2.10.3-1",
     "miniprogram-simulate": "^1.2.5",
@@ -65,6 +75,5 @@
     "vinyl": "^2.2.0",
     "webpack": "^4.29.5",
     "webpack-node-externals": "^1.7.2"
-  },
-  "dependencies": {}
+  }
 }
